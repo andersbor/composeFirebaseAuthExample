@@ -38,6 +38,7 @@ fun Authentication(
     user: FirebaseUser? = null,
     message: String = "",
     signIn: (email: String, password: String) -> Unit = { _, _ -> },
+    register: (email: String, password: String) -> Unit = { _, _ -> },
     navigateToWelcome: () -> Unit = {}
 ) {
     if (user != null) {
@@ -61,9 +62,6 @@ fun Authentication(
         }
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
-            if (message.isNotEmpty()) {
-                Text(message)
-            }
             // TODO layout for landscape: side by side
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -73,6 +71,9 @@ fun Authentication(
                 isError = emailIsError,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             )
+            if (emailIsError) {
+                Text("Invalid email", color = MaterialTheme.colorScheme.error)
+            }
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = password,
@@ -93,25 +94,32 @@ fun Authentication(
                     }
                 }
             )
+            if (passwordIsError) {
+                Text("Invalid password", color = MaterialTheme.colorScheme.error)
+            }
+            if (message.isNotEmpty()) {
+                Text(message, color = MaterialTheme.colorScheme.error)
+            }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = {
+                    // TODO same validation for register and sign in
+                    register(email, password)
+                }) {
                     Text("Register")
                 }
                 Button(onClick = {
-                    // TODO same validation for register and sign in
                     email = email.trim()
-                    if (email.trim().isEmpty() || !validateEmail(email)) {
+                    if (email.isEmpty() || !validateEmail(email)) {
                         emailIsError = true
                         return@Button
-                        // TODO better error messages
                     } else {
                         emailIsError = false
                     }
                     password = password.trim()
-                    if (password.trim().isEmpty()) {
+                    if (password.isEmpty()) {
                         passwordIsError = true
                         return@Button
                     } else {
@@ -124,7 +132,6 @@ fun Authentication(
             }
         }
     }
-
 }
 
 fun validateEmail(email: String): Boolean {

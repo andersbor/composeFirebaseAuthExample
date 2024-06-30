@@ -40,6 +40,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 user = authenticationViewModel.user,
                 message = authenticationViewModel.message,
                 signIn = { email, password -> authenticationViewModel.signIn(email, password) },
+                register = { email, password -> authenticationViewModel.register(email, password) },
                 navigateToWelcome = { navController.navigate(NavRoutes.Welcome.route) }
             )
         }

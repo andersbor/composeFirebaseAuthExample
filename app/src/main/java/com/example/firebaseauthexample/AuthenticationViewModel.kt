@@ -30,7 +30,7 @@ class AuthenticationViewModel : ViewModel() {
         auth.signOut()
     }
 
-    fun signUp(email: String, password: String) {
+    fun register(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
