@@ -44,11 +44,13 @@ fun Authentication(
     if (user != null) {
         navigateToWelcome()
     }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    val emailStart = "anbo@secret12.dk" // TODO remove starting email
+    val passwordStart = "secret12" // TODO remove starting password
+    var email by remember { mutableStateOf(emailStart) }
+    var password by remember { mutableStateOf(passwordStart) }
     var emailIsError by remember { mutableStateOf(false) }
     var passwordIsError by remember { mutableStateOf(false) }
-    val showPassword = remember { mutableStateOf(false) }
+    var showPassword by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -81,11 +83,11 @@ fun Authentication(
                 label = { Text("Password") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 visualTransformation =
-                if (showPassword.value) VisualTransformation.None else PasswordVisualTransformation(),
+                if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                 isError = passwordIsError,
                 trailingIcon = {
-                    IconButton(onClick = { showPassword.value = !showPassword.value }) {
-                        if (showPassword.value) {
+                    IconButton(onClick = { showPassword = !showPassword }) {
+                        if (showPassword) {
                             Icon(Icons.Filled.Visibility, contentDescription = "Hide password")
                             // icons: large packet of icons loaded in gradle file
                         } else {
@@ -134,7 +136,7 @@ fun Authentication(
     }
 }
 
-fun validateEmail(email: String): Boolean {
+private fun validateEmail(email: String): Boolean {
     return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }
 
