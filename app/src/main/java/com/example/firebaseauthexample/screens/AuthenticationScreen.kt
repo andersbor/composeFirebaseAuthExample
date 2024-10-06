@@ -65,6 +65,9 @@ fun Authentication(
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
             // TODO layout for landscape: side by side
+            if (user!=null) {
+                Text("Welcome ${user.email ?: "unknown"}")
+            }
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = email,

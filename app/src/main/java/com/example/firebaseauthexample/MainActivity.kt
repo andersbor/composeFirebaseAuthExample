@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -53,5 +54,13 @@ fun MainScreen(modifier: Modifier = Modifier) {
                     navController.popBackStack(NavRoutes.Authentication.route, inclusive = false)
                 })
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    FirebaseAuthExampleTheme {
+        MainScreen()
     }
 }
