@@ -30,24 +30,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(modifier: Modifier = Modifier) {
+fun MainScreen() {
     val navController = rememberNavController()
     val authenticationViewModel: AuthenticationViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = NavRoutes.Authentication.route) {
         composable(NavRoutes.Authentication.route) {
             Authentication(
-                modifier,
                 user = authenticationViewModel.user,
                 message = authenticationViewModel.message,
                 signIn = { email, password -> authenticationViewModel.signIn(email, password) },
                 register = { email, password -> authenticationViewModel.register(email, password) },
-                navigateToWelcome = { navController.navigate(NavRoutes.Welcome.route) }
+                navigateToNextScreen = { navController.navigate(NavRoutes.Welcome.route) }
             )
         }
         composable(NavRoutes.Welcome.route) {
             Welcome(
-                modifier,
                 user = authenticationViewModel.user,
                 signOut = { authenticationViewModel.signOut() },
                 navigateToAuthentication = {

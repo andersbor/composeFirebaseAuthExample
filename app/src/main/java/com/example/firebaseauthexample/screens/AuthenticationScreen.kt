@@ -34,15 +34,14 @@ import com.google.firebase.auth.FirebaseUser
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Authentication(
-    modifier: Modifier = Modifier,
     user: FirebaseUser? = null,
     message: String = "",
     signIn: (email: String, password: String) -> Unit = { _, _ -> },
     register: (email: String, password: String) -> Unit = { _, _ -> },
-    navigateToWelcome: () -> Unit = {}
+    navigateToNextScreen: () -> Unit = {}
 ) {
     if (user != null) {
-        navigateToWelcome()
+        navigateToNextScreen()
     }
     val emailStart = "anbo@secret12.dk" // TODO remove starting email
     val passwordStart = "secret12" // TODO remove starting password

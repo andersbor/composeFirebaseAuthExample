@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseUser
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Welcome(
-    modifier: Modifier = Modifier,
     user: FirebaseUser? = null,
     signOut: () -> Unit = {},
     navigateToAuthentication: () -> Unit = {}
