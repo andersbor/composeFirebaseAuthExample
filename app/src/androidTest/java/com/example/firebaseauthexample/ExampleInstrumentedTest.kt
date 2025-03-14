@@ -1,6 +1,5 @@
 package com.example.firebaseauthexample
 
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -8,7 +7,7 @@ import androidx.compose.ui.test.performTextClearance
 import androidx.compose.ui.test.performTextInput
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.firebaseauthexample.screens.Authentication
+import com.example.firebaseauthexample.screens.AuthenticationScreen
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -28,7 +27,7 @@ class ExampleInstrumentedTest {
     @Test
     fun authTest() {
         rule.setContent {
-            Authentication()
+            AuthenticationScreen()
         }
         rule.onNodeWithText("Email").performTextClearance()
         rule.onNodeWithText("Email").performTextInput("anbo@secret12.dk")

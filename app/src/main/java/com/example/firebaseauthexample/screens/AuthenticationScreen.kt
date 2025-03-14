@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,7 +34,7 @@ import com.google.firebase.auth.FirebaseUser
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Authentication(
+fun AuthenticationScreen(
     user: FirebaseUser? = null,
     message: String = "",
     signIn: (email: String, password: String) -> Unit = { _, _ -> },
@@ -41,7 +42,10 @@ fun Authentication(
     navigateToNextScreen: () -> Unit = {}
 ) {
     if (user != null) {
-        navigateToNextScreen()
+        // https://developer.android.com/develop/ui/compose/side-effects
+        LaunchedEffect(Unit) {
+            navigateToNextScreen()
+        }
     }
     val emailStart = "anbo@secret12.dk" // TODO remove starting email
     val passwordStart = "secret12" // TODO remove starting password
@@ -64,7 +68,7 @@ fun Authentication(
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
             // TODO layout for landscape: side by side
-            if (user!=null) {
+            if (user != null) {
                 Text("Welcome ${user.email ?: "unknown"}")
             }
             OutlinedTextField(
@@ -85,7 +89,7 @@ fun Authentication(
                 label = { Text("Password") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 visualTransformation =
-                if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                    if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                 isError = passwordIsError,
                 trailingIcon = {
                     IconButton(onClick = { showPassword = !showPassword }) {
@@ -145,5 +149,5 @@ private fun validateEmail(email: String): Boolean {
 @Preview(showBackground = true)
 @Composable
 fun AuthPreview() {
-    Authentication()
+    AuthenticationScreen()
 }

@@ -5,14 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.firebaseauthexample.screens.Authentication
-import com.example.firebaseauthexample.screens.Welcome
+import com.example.firebaseauthexample.screens.AuthenticationScreen
+import com.example.firebaseauthexample.screens.WelcomeScreen
 import com.example.firebaseauthexample.ui.theme.FirebaseAuthExampleTheme
 
 // project connected to Firebase Birdwatching project
@@ -30,25 +30,28 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen() {
-    val navController = rememberNavController()
-    val authenticationViewModel: AuthenticationViewModel = viewModel()
-
-    NavHost(navController = navController, startDestination = NavRoutes.Authentication.route) {
+fun MainScreen(
+    navController: NavHostController = rememberNavController(),
+    authenticationViewModel: AuthenticationViewModel = viewModel()
+) {
+    NavHost(
+        navController = navController,
+        startDestination = NavRoutes.Authentication.route
+    ) {
         composable(NavRoutes.Authentication.route) {
-            Authentication(
+            AuthenticationScreen(
                 user = authenticationViewModel.user,
                 message = authenticationViewModel.message,
                 signIn = { email, password -> authenticationViewModel.signIn(email, password) },
-                register = { email, password -> authenticationViewModel.register(email, password) },
+                register = authenticationViewModel::register,
                 navigateToNextScreen = { navController.navigate(NavRoutes.Welcome.route) }
             )
         }
         composable(NavRoutes.Welcome.route) {
-            Welcome(
+            WelcomeScreen(
                 user = authenticationViewModel.user,
-                signOut = { authenticationViewModel.signOut() },
-                navigateToAuthentication = {
+                onSignOut = { authenticationViewModel.signOut() },
+                onNavigateToAuthentication = {
                     navController.popBackStack(NavRoutes.Authentication.route, inclusive = false)
                 })
         }
