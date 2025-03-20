@@ -15,7 +15,7 @@ class AuthenticationViewModel : ViewModel() {
     var message by mutableStateOf("")
 
     fun signIn(email: String, password: String) {
-        viewModelScope.launch {
+        //viewModelScope.launch {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -26,7 +26,7 @@ class AuthenticationViewModel : ViewModel() {
                         message = task.exception?.message ?: "Unknown error"
                     }
                 }
-        }
+        //}
     }
 
     fun signOut() {
