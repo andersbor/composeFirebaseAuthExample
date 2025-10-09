@@ -45,7 +45,6 @@ fun MainScreen(
                 signIn = { email, password -> authenticationViewModel.signIn(email, password) },
                 register = authenticationViewModel::register,
                 navigateToNextScreen = {
-
                     navController.navigate(NavRoutes.Welcome.route) }
             )
         }
