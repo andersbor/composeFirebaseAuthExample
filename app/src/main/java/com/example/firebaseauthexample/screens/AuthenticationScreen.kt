@@ -30,6 +30,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseUser
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +38,7 @@ import com.google.firebase.auth.FirebaseUser
 fun AuthenticationScreen(
     user: FirebaseUser? = null,
     message: String = "",
-    signIn: (email: String, password: String) -> Unit = { _, _ -> },
+    signIn: (email: String, password: String) ->  Unit= { _, _ -> },
     register: (email: String, password: String) -> Unit = { _, _ -> },
     navigateToNextScreen: () -> Unit = {}
 ) {
@@ -66,7 +67,7 @@ fun AuthenticationScreen(
             )
         }
     ) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
+        Column(modifier = Modifier.padding(innerPadding).padding(8.dp)) {
             // TODO layout for landscape: side by side
             if (user != null) {
                 Text("Welcome ${user.email ?: "unknown"}")

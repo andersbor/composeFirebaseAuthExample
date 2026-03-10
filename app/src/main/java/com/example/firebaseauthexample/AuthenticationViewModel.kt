@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 
 class AuthenticationViewModel : ViewModel() {
     private val auth = FirebaseAuth.getInstance()
+
     var user: FirebaseUser? by mutableStateOf(auth.currentUser)
     var message by mutableStateOf("")
 

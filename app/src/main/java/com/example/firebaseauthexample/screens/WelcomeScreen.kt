@@ -27,7 +27,7 @@ import com.google.firebase.auth.FirebaseUser
 fun WelcomeScreen(
     user: FirebaseUser?,
     onSignOut: () -> Unit,
-    onNavigateToAuthentication: () -> Unit
+    navigateToAuthentication: () -> Unit
 ) {
     Scaffold(
         topBar = { WelcomeTopAppBar(onSignOut) }
@@ -35,7 +35,7 @@ fun WelcomeScreen(
     { innerPadding ->
         WelcomeContent(
             user,
-            onNavigateToAuthentication,
+            navigateToAuthentication,
             onSignOut,
             modifier = Modifier.padding(innerPadding)
         )
@@ -62,7 +62,6 @@ private fun WelcomeContent(
             Text("Welcome ${user.email ?: "unknown"}")
         }
 
-        // TODO logout button in menu
         Button(onClick = { onSignOut() }) {
             Text("Sign out")
         }
@@ -89,5 +88,5 @@ private fun WelcomeTopAppBar(onSignOut: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun PreviewWelcome() {
-    WelcomeScreen(user = null, onSignOut = {}, onNavigateToAuthentication = {})
+    WelcomeScreen(user = null, onSignOut = {}, navigateToAuthentication = {})
 }

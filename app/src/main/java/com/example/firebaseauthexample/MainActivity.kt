@@ -52,7 +52,7 @@ fun MainScreen(
             WelcomeScreen(
                 user = authenticationViewModel.user,
                 onSignOut = { authenticationViewModel.signOut() },
-                onNavigateToAuthentication = {
+                navigateToAuthentication = {
                     navController.popBackStack(NavRoutes.Authentication.route, inclusive = false)
                 })
         }
